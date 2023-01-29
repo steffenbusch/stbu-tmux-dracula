@@ -25,7 +25,7 @@ main()
   show_day_month=$(get_tmux_option "@dracula-day-month" false)
   show_refresh=$(get_tmux_option "@dracula-refresh-rate" 5)
   show_kubernetes_context_label=$(get_tmux_option "@dracula-kubernetes-context-label" "")
-  IFS=' ' read -r -a plugins <<< $(get_tmux_option "@dracula-plugins" "time")
+  IFS=' ' read -r -a plugins <<< $(get_tmux_option "@dracula-plugins" "time hostname")
 
   # Dracula Color Pallette
   white='#f8f8f2'
@@ -111,16 +111,11 @@ main()
   tmux set-option -g status-style "bg=${gray},fg=${white}"
 
   # Status left
-  # RED on PRIMARY Host
-  left_color=${green}
-  if [ -e /mode/PRIMARY ]; then
-    left_color=${red}
-  fi
   if $show_powerline; then
-    tmux set-option -g status-left "#[bg=${left_color},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon} #[fg=${left_color},bg=${gray}]#{?client_prefix,#[fg=${yellow}],}${left_sep}"
+    tmux set-option -g status-left "#[bg=${green},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon} #[fg=${green},bg=${gray}]#{?client_prefix,#[fg=${yellow}],}${left_sep}"
     powerbg=${gray}
   else
-    tmux set-option -g status-left "#[bg=${left_color},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon}"
+    tmux set-option -g status-left "#[bg=${green},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon}"
   fi
 
   # Status right
@@ -136,7 +131,12 @@ main()
     if [ $plugin = "time" ]; then
       IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-time-colors" "dark_purple white")
       # Day DD.MM HH24:MM
-      script="%a %d.%m %R "
+      script="%a %d.%m %R"
+    fi
+
+    if [ $plugin = "hostname" ]; then
+      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "red white")
+      script="${HOSTNAME:0:7}"
     fi
 
     if $show_powerline; then
