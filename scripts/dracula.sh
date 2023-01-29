@@ -117,7 +117,7 @@ main()
     left_color=${red}
   fi
   if $show_powerline; then
-    tmux set-option -g status-left "#[bg=${left_color},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon} #[fg=${greenleft_color},bg=${gray}]#{?client_prefix,#[fg=${yellow}],}${left_sep}"
+    tmux set-option -g status-left "#[bg=${left_color},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon} #[fg=${left_color},bg=${gray}]#{?client_prefix,#[fg=${yellow}],}${left_sep}"
     powerbg=${gray}
   else
     tmux set-option -g status-left "#[bg=${left_color},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon}"
