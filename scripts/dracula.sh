@@ -25,7 +25,7 @@ main()
   show_day_month=$(get_tmux_option "@dracula-day-month" false)
   show_refresh=$(get_tmux_option "@dracula-refresh-rate" 5)
   show_kubernetes_context_label=$(get_tmux_option "@dracula-kubernetes-context-label" "")
-  IFS=' ' read -r -a plugins <<< $(get_tmux_option "@dracula-plugins" "battery network weather")
+  IFS=' ' read -r -a plugins <<< $(get_tmux_option "@dracula-plugins" "time")
 
   # Dracula Color Pallette
   white='#f8f8f2'
