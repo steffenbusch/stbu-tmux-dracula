@@ -10,21 +10,14 @@ main()
   datafile=/tmp/.dracula-tmux-data
 
   # set configuration option variables
-  show_fahrenheit=$(get_tmux_option "@dracula-show-fahrenheit" true)
-  show_location=$(get_tmux_option "@dracula-show-location" true)
-  fixed_location=$(get_tmux_option "@dracula-fixed-location")
-  show_powerline=$(get_tmux_option "@dracula-show-powerline" false)
   show_flags=$(get_tmux_option "@dracula-show-flags" false)
   show_left_icon=$(get_tmux_option "@dracula-show-left-icon" smiley)
   show_left_icon_padding=$(get_tmux_option "@dracula-left-icon-padding" 1)
-  show_military=$(get_tmux_option "@dracula-military-time" false)
-  show_timezone=$(get_tmux_option "@dracula-show-timezone" true)
   show_left_sep=$(get_tmux_option "@dracula-show-left-sep" )
   show_right_sep=$(get_tmux_option "@dracula-show-right-sep" )
   show_border_contrast=$(get_tmux_option "@dracula-border-contrast" false)
   show_day_month=$(get_tmux_option "@dracula-day-month" false)
   show_refresh=$(get_tmux_option "@dracula-refresh-rate" 5)
-  show_kubernetes_context_label=$(get_tmux_option "@dracula-kubernetes-context-label" "")
   IFS=' ' read -r -a plugins <<< $(get_tmux_option "@dracula-plugins" "time hostname")
 
   # Dracula Color Pallette
@@ -86,12 +79,9 @@ main()
   tmux set-option -g status-interval $show_refresh
 
   # set the prefix + t time format
-  if $show_military; then
-    tmux set-option -g clock-mode-style 24
-  else
-    tmux set-option -g clock-mode-style 12
-  fi
-
+  # Always 24 hour style
+  tmux set-option -g clock-mode-style 24
+  
   # set length
   tmux set-option -g status-left-length 100
   tmux set-option -g status-right-length 100
@@ -128,15 +118,15 @@ main()
         script="#($current_dir/git.sh)"     
     fi
 
+    if [ $plugin = "hostname" ]; then
+      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "red white")
+      script="${HOSTNAME:0:7}"
+    fi
+
     if [ $plugin = "time" ]; then
       IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-time-colors" "dark_purple white")
       # Day DD.MM HH24:MM
       script="%a %d.%m %R"
-    fi
-
-    if [ $plugin = "hostname" ]; then
-      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "red white")
-      script="${HOSTNAME:0:7}"
     fi
 
     if $show_powerline; then
