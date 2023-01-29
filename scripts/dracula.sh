@@ -114,12 +114,12 @@ main()
   for plugin in "${plugins[@]}"; do
 
     if [ $plugin = "git" ]; then
-      IFS=' ' read -r -a colors  <<< $(get_tmux_option "@dracula-git-colors" "green dark_gray")
+      IFS=' ' read -r -a colors  <<< $(get_tmux_option "@dracula-git-colors" "yellow dark_gray")
         script="#($current_dir/git.sh)"     
     fi
 
     if [ $plugin = "hostname" ]; then
-      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "red white")
+      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "green dark_gray")
       script="${HOSTNAME:0:7}"
     fi
 
