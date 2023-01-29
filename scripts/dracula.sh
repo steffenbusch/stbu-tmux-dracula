@@ -65,11 +65,6 @@ main()
     left_sep="$show_left_sep"
   fi
 
-  # start weather script in background
-  if [[ "${plugins[@]}" =~ "weather" ]]; then
-    $current_dir/sleep_weather.sh $show_fahrenheit $show_location $fixed_location &
-  fi
-
   # Set timezone unless hidden by configuration
   case $show_timezone in
     false)
