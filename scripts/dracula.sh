@@ -120,7 +120,7 @@ main()
 
     if [ $plugin = "hostname" ]; then
       IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-hostname-colors" "green dark_gray")
-      script="${HOSTNAME:0:7}"
+      script="$(hostname -s)"
     fi
 
     if [ $plugin = "time" ]; then
