@@ -124,6 +124,11 @@ main()
       script="$(hostname -s)"
     fi
 
+    if [ $plugin = "mode" ]; then
+      IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-mode-colors" "white dark_gray")
+      script="#($current_dir/mode.sh)"
+    fi
+
     if [ $plugin = "time" ]; then
       IFS=' ' read -r -a colors <<< $(get_tmux_option "@dracula-time-colors" "dark_purple white")
       # Day DD.MM HH24:MM
