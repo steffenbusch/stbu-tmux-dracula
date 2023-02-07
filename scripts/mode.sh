@@ -5,12 +5,26 @@ export LC_ALL=en_US.UTF-8
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $current_dir/utils.sh
 
-main() {
+check_mode() {
+  if [ "$(hostname -s)" = "wmavm" ]; then
+    echo ""
+    return
+  fi
+
   if [ -e /mode/PRIMARY ]; then
     echo "#[fg=red] Primary "
-  else
-    echo ""
+    return
   fi
+
+  if [ -e /mode/SYNC_OFF ]; then
+    echo " #[fg=red]"
+  else
+    echo " "
+  fi
+}
+
+main() {
+  check_mode
   sleep $RATE
 }
 
