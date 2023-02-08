@@ -19,7 +19,7 @@ check_mode() {
   if [ -e /mode/SYNC_OFF ]; then
     echo " #[fg=red]"
   else
-    echo " "
+    echo " #[fg=green]"
   fi
 }
 
